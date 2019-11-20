@@ -5,39 +5,35 @@ class Main:
         return len(elementos)
 
     def main(self):
-        dataset = []
-        datasetFinal = []
-        dsClass = {}
-        lista2 = []
+        _dataset = []
+        _questions = []
         # get file name by the arguments
-        fileName = sys.argv[1]
+        _filename = sys.argv[1]
         
         # open file
-        file = open(fileName, "r")
-        cabecalho = file.readline().replace('\n', '').split(' ')
-        # print(cabecalho[-1])
-        # print(cabecalho)
+        _file = open(_filename, "r")
+        _cabecalho = _file.readline().replace('\n', '').split(' ')
+        # print(_cabecalho[-1])
+        # print(_cabecalho)
         
-        for lines in file:
-            fReplace = lines.replace('\n', '')
-            if fReplace != '---':
-                dataset.append(fReplace.split(' '))
+        for lines in _file:
+            _replace = lines.replace('\n', '')
+            if _replace != '---':
+                _dataset.append(_replace.split(' '))
             else:
                 break
-        file.close()
+        for lines in _file:
+            _replace = lines.replace('\n', '')
+            _questions.append(_replace.split(' '))
+        _file.close()
+
+        _dictionary = {}
+        for i in range(len(_dataset)):
+            _linha = _dataset[i]
+            if (_linha[-1] not in _dictionary):
+                _dictionary[_linha[-1]] = []
+            _dictionary[_linha[-1]].append(_linha)
         
-        for i in range(len(dataset)):
-            linha = dataset[i]
-            if (linha[-1] not in dsClass):
-                dsClass[linha[-1]] = []
-            dsClass[linha[-1]].append(linha)
-        
-        for index in dsClass:
-            self.porcentagem(dsClass[index])
-        
-        for index, atributos in dsClass.items():
-            print(atributos)
-            lista2.append([index, self.porcentagem(atributos)])
-        
-        print(lista2)
+        for _index, _atributos in _dictionary.items():
+            print(_index + " - " + str(_atributos))
 Main().main()
