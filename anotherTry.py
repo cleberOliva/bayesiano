@@ -31,4 +31,13 @@ class Main:
         
         for values in dsClass:
             print(len(dsClass[values]))
+        numColunas = len(dataset[0])
+        numLines = len(dataset[1:])
+        for i in range(numColunas):
+            text = ""
+            for j in range(len(dataset)):
+                text = text + dataset[j][i] + " "
+            
+            datasetFinal.append(text.split(' '))
+            datasetFinal[i].pop()
 Main().main()
