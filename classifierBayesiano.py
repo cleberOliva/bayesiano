@@ -31,12 +31,14 @@ class Main:
                 _dictionary[_linha[-1]] = []
             _dictionary[_linha[-1]].append(_linha)
         
-        print("tamanho _dictionary: " + str(len(_dictionary)))
+        print("Cabecalho")
+        print(_cabecalho)
+        print
         for _index in _dictionary:
             print(_index)
             for _atributos in _dictionary[_index]:
                 print(_atributos)
-        print
+            print
         print("Perguntas")
         for _linha in _questions:
             print(_linha)
