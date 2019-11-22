@@ -1,9 +1,5 @@
 import sys
 class Main:
-
-    def porcentagem(self, elementos):
-        return len(elementos)
-
     def main(self):
         _dataset = []
         _questions = []
@@ -34,6 +30,13 @@ class Main:
                 _dictionary[_linha[-1]] = []
             _dictionary[_linha[-1]].append(_linha)
         
-        for _index, _atributos in _dictionary.items():
-            print(_index + " - " + str(_atributos))
+        print("tamanho _dictionary: " + str(len(_dictionary)))
+        for _index in _dictionary:
+            print(_index)
+            for _atributos in _dictionary[_index]:
+                print(_atributos)
+        print
+        print("Perguntas")
+        for _linha in _questions:
+            print(_linha)
 Main().main()

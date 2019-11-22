@@ -21,13 +21,13 @@ class Main:
                 break
         file.close()
         
-        for i in range(len(dataset)):
-            linha = dataset[i]
-            if (linha[-1] not in dsClass):
-                dsClass[linha[-1]] = []
-            dsClass[linha[-1]].append(linha)
+        # for i in range(len(dataset)):
+        #     linha = dataset[i]
+        #     if (linha[-1] not in dsClass):
+        #         dsClass[linha[-1]] = []
+        #     dsClass[linha[-1]].append(linha)
         
-        print(dsClass)
+        # print(dsClass)
         
         for values in dsClass:
             print(len(dsClass[values]))
@@ -40,4 +40,6 @@ class Main:
             
             datasetFinal.append(text.split(' '))
             datasetFinal[i].pop()
+        for teste in datasetFinal:
+            print(teste)
 Main().main()
