@@ -33,6 +33,7 @@ class ClassificadorBayesiano:
                 x_dictionary[x_linha[-1]] = []
             x_dictionary[x_linha[-1]].append(x_linha)
         
+        # def classifica
         x_dict_result = {}
         for x_counter_line_questions in range(len(x_questions)):
             x_results = []
@@ -56,6 +57,8 @@ class ClassificadorBayesiano:
                 # print('%.4f' % x_produtorio)
                 x_dict_result[x_index].append(x_produtorio)
                 # x_results.append(x_produtorio)
+            
+            # def printResultado(self, p_counter_line)
             x_texto = ""
             for x_indice in range(len(x_cabecalho)):
                 if x_cabecalho[x_indice] == x_cabecalho[-2]:
