@@ -71,4 +71,5 @@ class ClassificadorBayesiano:
                 else:
                     x_texto = x_texto + x_cabecalho[x_indice] + '=' + str(x_questions[x_counter_line_questions][x_indice]) + ', '
             print(x_texto)
+            print()
 ClassificadorBayesiano().main()
