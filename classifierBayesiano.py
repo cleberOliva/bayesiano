@@ -24,24 +24,21 @@ class ClassificadorBayesiano:
             x_replace = lines.replace('\n', '')
             x_questions.append(x_replace.split(' '))
         x_file.close()
-
+        
+        x_total_lines = len(x_dataset)
         x_dictionary = {}
         for i in range(len(x_dataset)):
             x_linha = x_dataset[i]
             if (x_linha[-1] not in x_dictionary):
                 x_dictionary[x_linha[-1]] = []
             x_dictionary[x_linha[-1]].append(x_linha)
-        
-        print((x_dictionary['N'][0][0]))
-        print(len(x_dictionary['S']))
 
         x_dict_result = {}
         for x_counter_line_questions in range(len(x_questions)):
             x_results = []
             for x_index in x_dictionary:
-                print(x_index)
                 x_dict_result[x_index]= []
-                x_produtorio = 1
+                x_produtorio = (len(x_dictionary[x_index]) / x_total_lines)
                 for x_counter_column in range(len(x_cabecalho)):
                     # print('Elemento Questão:    ' + str(x_questions[x_counter_line_questions][x_counter_column]))
                     # print(x_cabecalho[x_counter_column])
@@ -61,13 +58,14 @@ class ClassificadorBayesiano:
                 # x_results.append(x_produtorio)
             x_texto = ""
             for x_indice in range(len(x_cabecalho)):
-                if x_cabecalho[x_indice] == x_cabecalho[-1]:
-                    x_texto = x_texto + x_cabecalho[x_indice] + '=' + max(x_dict_result.items(), key=operator.itemgetter(1))[0]
+                if x_cabecalho[x_indice] == x_cabecalho[-2]:
+                    x_texto = x_texto + x_cabecalho[x_indice] + '=' + str(x_questions[x_counter_line_questions][x_indice]) + ' ==> '
+                elif x_cabecalho[x_indice] == x_cabecalho[-1]:
+                    x_texto = x_texto + x_cabecalho[x_indice] + '=' + max(x_dict_result.items(), key=operator.itemgetter(1))[0] + ' '
+                    for x_in_dict_result, x_valor in x_dict_result.items():
+                        for x_column_dict_result in range(len(x_dict_result[x_in_dict_result])):
+                            x_texto = x_texto + ' ' + x_in_dict_result + '=' + '%.4f' % x_valor[x_column_dict_result] + ';'
                 else:
                     x_texto = x_texto + x_cabecalho[x_indice] + '=' + str(x_questions[x_counter_line_questions][x_indice]) + ', '
             print(x_texto)
-            print(x_dict_result)
-            print('Num max: ' + str(max(x_dict_result.items(), key=operator.itemgetter(1))))
-            print('=========================================')
-            # print(x_results)
 ClassificadorBayesiano().main()
