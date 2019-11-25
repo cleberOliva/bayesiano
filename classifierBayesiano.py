@@ -1,5 +1,6 @@
 # https://gist.github.com/tuttelikz/94f750ef3bf14f8a126a
 import sys
+import operator
 class ClassificadorBayesiano:
     def main(self):
         x_dataset = []
@@ -34,25 +35,39 @@ class ClassificadorBayesiano:
         print((x_dictionary['N'][0][0]))
         print(len(x_dictionary['S']))
 
+        x_dict_result = {}
         for x_counter_line_questions in range(len(x_questions)):
+            x_results = []
             for x_index in x_dictionary:
                 print(x_index)
+                x_dict_result[x_index]= []
                 x_produtorio = 1
                 for x_counter_column in range(len(x_cabecalho)):
-                    print('Elemento Questão:    ' + str(x_questions[x_counter_line_questions][x_counter_column]))
+                    # print('Elemento Questão:    ' + str(x_questions[x_counter_line_questions][x_counter_column]))
+                    # print(x_cabecalho[x_counter_column])
                     if x_questions[x_counter_line_questions][x_counter_column] == '?':
                         pass
                     else:
                         x_somatorio = 0
                         for x_counter_line_dict in range(len(x_dictionary[x_index])):
-                            print('Elemento Dicionario: ' + str(x_dictionary[x_index][x_counter_line_dict][x_counter_column]))
+                            # print('Elemento Dicionario: ' + str(x_dictionary[x_index][x_counter_line_dict][x_counter_column]))
                             if (x_questions[x_counter_line_questions][x_counter_column] == x_dictionary[x_index][x_counter_line_dict][x_counter_column]):
                                 x_somatorio = x_somatorio + 1
                         x_porcentagem = x_somatorio / len(x_dictionary[x_index])
                         x_produtorio = x_produtorio * x_porcentagem
-                        print('%.4f' % x_porcentagem)
-                
-                print('%.4f' % x_produtorio)
-                print('=========================================')
-                # print(_cabecalho[_counter_column] + '=' + str(_questions[_counter_line_questions][_counter_column]))
+                        # print('%.4f' % x_porcentagem)
+                # print('%.4f' % x_produtorio)
+                x_dict_result[x_index].append(x_produtorio)
+                # x_results.append(x_produtorio)
+            x_texto = ""
+            for x_indice in range(len(x_cabecalho)):
+                if x_cabecalho[x_indice] == x_cabecalho[-1]:
+                    x_texto = x_texto + x_cabecalho[x_indice] + '=' + max(x_dict_result.items(), key=operator.itemgetter(1))[0]
+                else:
+                    x_texto = x_texto + x_cabecalho[x_indice] + '=' + str(x_questions[x_counter_line_questions][x_indice]) + ', '
+            print(x_texto)
+            print(x_dict_result)
+            print('Num max: ' + str(max(x_dict_result.items(), key=operator.itemgetter(1))))
+            print('=========================================')
+            # print(x_results)
 ClassificadorBayesiano().main()
