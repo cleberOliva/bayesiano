@@ -32,7 +32,7 @@ class ClassificadorBayesiano:
             if (x_linha[-1] not in x_dictionary):
                 x_dictionary[x_linha[-1]] = []
             x_dictionary[x_linha[-1]].append(x_linha)
-
+        
         x_dict_result = {}
         for x_counter_line_questions in range(len(x_questions)):
             x_results = []
