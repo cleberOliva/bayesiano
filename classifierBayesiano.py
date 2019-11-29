@@ -4,10 +4,12 @@ import os.path
 import operator
 class ClassificadorBayesiano:
     def __init__(self):
-        self.x_cabecalho
-        self.x_dataset = []
-        self.x_questions = []
-        self.x_dict_result = {}
+        self.x_cabecalho    = []
+        self.x_dataset      = []
+        self.x_questions    = []
+        self.x_dictionary   = {}
+        self.x_dict_result  = {}
+        self.x_total_lines  = None
 
     def printarResultados(self, p_line_counter):
         x_texto = ""
@@ -24,26 +26,30 @@ class ClassificadorBayesiano:
         print(x_texto)
 
     def processarDataSet(self):
+        self.x_total_lines = len(self.x_dataset)
+
+        for i in range(len(self.x_dataset)):
+            x_linha = self.x_dataset[i]
+            if (x_linha[-1] not in self.x_dictionary):
+                self.x_dictionary[x_linha[-1]] = []
+            self.x_dictionary[x_linha[-1]].append(x_linha)
+        
         for x_counter_line_questions in range(len(self.x_questions)):
             x_results = []
-            for x_index in x_dictionary:
-                self.x_dict_result[x_index]= []
-                x_produtorio = (len(x_dictionary[x_index]) / x_total_lines)
+            for x_index in self.x_dictionary:
+                self.x_dict_result[x_index] = []
+                x_produtorio = float(len(self.x_dictionary[x_index])) / float(self.x_total_lines)
                 for x_counter_column in range(len(self.x_cabecalho)):
                     if self.x_questions[x_counter_line_questions][x_counter_column] == '?':
                         pass
                     else:
-                        x_somatorio = 0
-                        for x_counter_line_dict in range(len(x_dictionary[x_index])):
-                            # print('Elemento Dicionario: ' + str(x_dictionary[x_index][x_counter_line_dict][x_counter_column]))
-                            if (self.x_questions[x_counter_line_questions][x_counter_column] == x_dictionary[x_index][x_counter_line_dict][x_counter_column]):
-                                x_somatorio = x_somatorio + 1
-                        x_porcentagem = x_somatorio / len(x_dictionary[x_index])
+                        x_somatorio = 0.0
+                        for x_counter_line_dict in range(len(self.x_dictionary[x_index])):
+                            if (self.x_questions[x_counter_line_questions][x_counter_column] == self.x_dictionary[x_index][x_counter_line_dict][x_counter_column]):
+                                x_somatorio = x_somatorio + 1.0
+                        x_porcentagem = x_somatorio / float(len(self.x_dictionary[x_index]))
                         x_produtorio = x_produtorio * x_porcentagem
-                        # print('%.4f' % x_porcentagem)
-                # print('%.4f' % x_produtorio)
                 self.x_dict_result[x_index].append(x_produtorio)
-            
             self.printarResultados(x_counter_line_questions)
     
     def lerArquivo(self):
@@ -64,11 +70,11 @@ class ClassificadorBayesiano:
             x_replace = lines.replace('\n', '')
             self.x_questions.append(x_replace.split(' '))
         x_file.close()
-
-        print(os.path.splitext(x_filename))[1]
+        
+        self.processarDataSet()
+        # print(os.path.splitext(x_filename))[1]
     def main(self):
 
         # abrir/ler arquivo e criar dataset
         self.lerArquivo()
-        # self.processarDataSet()
 ClassificadorBayesiano().main()
