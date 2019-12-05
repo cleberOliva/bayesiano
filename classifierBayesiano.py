@@ -1,6 +1,5 @@
 # https://gist.github.com/tuttelikz/94f750ef3bf14f8a126a
 import sys
-import os.path
 import operator
 class ClassificadorBayesiano:
     def __init__(self):
@@ -57,22 +56,19 @@ class ClassificadorBayesiano:
         x_filename = sys.argv[1]
         x_file = open(x_filename, "r")
         self.x_cabecalho = x_file.readline().replace('\n', '').split(' ')
-        # print(_cabecalho[-1])
-        # print(_cabecalho)
         
         for lines in x_file:
             x_replace = lines.replace('\n', '')
-            if x_replace != '---':
-                self.x_dataset.append(x_replace.split(' '))
-            else:
+            if x_replace == '---':
                 break
+            self.x_dataset.append(x_replace.split(' '))
+
         for lines in x_file:
             x_replace = lines.replace('\n', '')
             self.x_questions.append(x_replace.split(' '))
         x_file.close()
         
         self.processarDataSet()
-        # print(os.path.splitext(x_filename))[1]
     def main(self):
 
         # abrir/ler arquivo e criar dataset
